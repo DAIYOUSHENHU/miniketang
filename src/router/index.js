@@ -13,13 +13,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Index',
-    component: Index,
+    path: '/', 
     meta: {
-      title: '首页'
+      title: '管理员界面'
     },
-    router
   },
   {
     path: '/about',
