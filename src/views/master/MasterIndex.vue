@@ -1,42 +1,15 @@
 <template>
 <div>
   <Top></Top>
+  <div style="height: 3px"></div>
   <el-container>
     <Aside @indexSelect="whichcps"></Aside>
     <el-container>
-      <el-header style="text-align: left; font-size: 20px">
-        <span>{{trace}}</span>
+      <el-header style="text-align: left; font-size: 22px; height: 80px;margin-top: 1px">
+        <p style="height: 80px;margin-top: 10px;height: 50px">{{trace}}</p>
       </el-header>
-
       <el-main>
-        <div v-if="cpsIndex==='0'">
-          <Index></Index>
-        </div>
-
-        <div v-if="cpsIndex==='1-1'">
-          <Students></Students>
-        </div>
-
-        <div v-if="cpsIndex==='1-2'">
-          <Lecturers></Lecturers>
-        </div>
-
-        <div v-if="cpsIndex==='2-1'">
-          <Permission></Permission>
-        </div>
-
-        <div v-if="cpsIndex==='3-1'">
-          <Classify></Classify>
-        </div>
-
-        <div v-if="cpsIndex==='3-2'">
-
-        </div>
-
-        <div v-if="cpsIndex==='4-1'">
-          <Order></Order>
-        </div>
-
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -45,16 +18,17 @@
 </template>
 
 <script>
-import NavMenu from '../.././components/common/Navmenu'
-import Top from '../.././components/common/Top'
-import Aside from '../../components/common/Aside'
+import Top from '../../components/common/topbar/Top'
+import Aside from '../../components/common/aside/Aside'
+import Foot from '../../components/common/foot/Foot'
+
 import Index from './index/Index'
 import Students from './users/students/Students'
-import Foot from '../../components/common/Foot'
 import Lecturers from './users/lecturers/Lecturers'
 import Permission from './permission/Permission'
 import Order from './orders/Order'
 import Classify from './courses/classify/Classify'
+
 export default {
   name: 'MasterIndex',
   data() {
@@ -88,16 +62,18 @@ export default {
 
   },
   components: {
-    NavMenu,
     Top,
     Aside,
+    Foot,
+
     Index,
     Students,
-    Foot,
+
     Lecturers,
     Permission,
     Order,
     Classify,
+
   }
 }
 </script>

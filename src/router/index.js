@@ -2,11 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 
-const Index = () => import('.././views/master/MasterIndex.vue')
 const About = () => import('../components/About.vue')
 const Login = () => import('../views/Login.vue')
 const Logon = () => import('../views/Logon.vue')
 const User = () => import('../components/User.vue')
+
+const Index = () => import('../views/master/index/Index.vue')
+const Students = () => import('../views/master/users/students/Students.vue')
 
 
 Vue.use(VueRouter)
@@ -14,16 +16,17 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/', 
+    component: Index,
     meta: {
       title: '管理员界面'
     },
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About,
+    path: '/users/students',
+    name: 'Students',
+    component: Students,
     meta: {
-      title: '关于'
+      title: '学生管理'
     }
   },
   {

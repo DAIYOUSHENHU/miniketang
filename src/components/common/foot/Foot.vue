@@ -1,7 +1,7 @@
 <template>
-<div id="foot" style="margin-top: 50px">
+<div id="foot" style="">
   <el-container>
-    <p>designed by xlc</p>
+    <p id="footp">designed by xlc</p>
   </el-container>
 </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   background-color: #555555;
 }
 
-p {
+#footp {
   width: 100%;
   height: 20px;
   text-align: center;

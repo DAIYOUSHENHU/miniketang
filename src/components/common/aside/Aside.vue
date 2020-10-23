@@ -1,16 +1,22 @@
 <template>
 <div>
-  <el-container style="height: 500px; border: 1px solid #eee">
-    <el-aside id="AsideSty" width="200px" style="background-color: rgb(238, 241, 246)">
+  <el-container style="height: 700px;solid #eee">
+    <el-aside id="AsideSty" width="220px">
+      <div style="height: 80px"></div>
       <el-menu :default-openeds="[]" @select="handleSelect">
         <el-menu-item index="0">
-          <template slot="title"><i class="el-icon-view"></i>首页</template>
+          <template slot="title" style="color: red;"><i class="el-icon-view"></i>
+            <router-link to="/">首页</router-link>
+          </template>
         </el-menu-item>
 
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-menu"></i>用户管理</template>
           <el-menu-item-group>
-            <el-menu-item index="1-1">学生管理</el-menu-item>
+            <el-menu-item index="1-1">
+              <router-link to="/users/students">学生管理</router-link>
+
+            </el-menu-item>
             <el-menu-item index="1-2">讲师管理</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -62,7 +68,12 @@ export default {
 
 <style>
 #AsideSty {
-  color: white;
-  background-color: #555555;
+  background-color: #fff;
+}
+
+a {
+  font-size: 14px;
+  color: red;
+  text-decoration: none;
 }
 </style>
