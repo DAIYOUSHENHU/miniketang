@@ -1,9 +1,9 @@
 <template>
 <div>
   <TopBar>
-    <div slot="left"><img id="leftimg" src="../../../assets/img/miniketang.jpg" alt=""></div>
+    <div slot="left"><img id="leftimg" src="@/assets/img/miniketang.jpg" alt=""></div>
     <div slot="msg"><i class="el-icon-message-solid">消息</i></div>
-    <div slot="masterimg"><img id="masterimg" src="../../../assets/img/userImg.jpg" alt=""></div>
+    <div slot="masterimg"><img id="masterimg" src="@/assets/img/userImg.jpg" alt=""></div>
     <div slot="mastername">
       <el-dropdown>
         <span style="font-size: 16px">谢林宸</span>
@@ -19,10 +19,25 @@
 
 <script>
 import TopBar from './TopBar'
+
+import {
+  getMasterInfo
+} from '@/network/masterindex'
 export default {
   name: 'Topbar',
+  data() {
+    return {
+      MasterInfo: null,
+    }
+  },
   components: {
     TopBar,
+  },
+  created() {
+    getMasterInfo().then(res => {
+      console.log(res);
+      this.MasterInfo = res
+    })
   }
 }
 </script>

@@ -72,7 +72,7 @@
 
   <el-backtop></el-backtop>
   <div class="block">
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length">
+    <el-pagination id="pagin" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length">
     </el-pagination>
   </div>
 </div>
@@ -165,5 +165,9 @@ export default {
   border-radius: 10px;
   text-align: center;
   font-size: 14px;
+}
+
+#pagin {
+  text-align: center;
 }
 </style>

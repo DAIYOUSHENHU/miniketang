@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
-const About = () => import('../components/About.vue')
-const Login = () => import('../views/Login.vue')
-const Logon = () => import('../views/Logon.vue')
-const User = () => import('../components/User.vue')
-
-const Index = () => import('../views/master/index/Index.vue')
+const Index = () => import('@/views/master/index/Index.vue')
 const Students = () => import('../views/master/users/students/Students.vue')
+const Lecturers = () => import('@/views/master/users/lecturers/Lecturers.vue')
+const Permission = () => import('@/views/master/permission/Permission')
+const Classify = () => import('@/views/master/courses/classify/Classify')
+const Orders = () => import('@/views/master/orders/Orders')
 
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/', 
+    path: '/',
+    redirect: '/index'
+  },
+  {
+    path: '/index', 
     component: Index,
     meta: {
       title: '管理员界面'
@@ -30,35 +32,38 @@ const routes = [
     }
   },
   {
-    path:'/login',
-    name: 'Login',
-    component: Login,
+    path: '/users/lecturers',
+    name: 'Lecturers',
+    component: Lecturers,
     meta: {
-      title: '登录'
-    },
-    children: [
-      {
-        path: 'logon',
-        name: Logon,
-        component: Logon,
-        meta: {
-          title: '注册'
-        }
-      },
-    ]
+      title: '教师管理'
+    }
   },
   {
-    path: '/user',
-    name: 'User',
-    component: User,
+    path: '/permission',
+    name: 'Permission',
+    component: Permission,
     meta: {
-      title: '用户'
-    },
-    beforeEnter: (to, from, next) => {
-      alert('请先登录')
-      next('/login')
+      title: '教师认证'
     }
-  }
+  },
+  {
+    path: '/courses/classify',
+    name: 'Classify',
+    component: Classify,
+    meta: {
+      title: '课程分类'
+    }
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    component: Orders,
+    meta: {
+      title: '教师认证'
+    }
+  },
+  
 ]
 
 const router = new VueRouter({
