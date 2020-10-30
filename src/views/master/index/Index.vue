@@ -10,6 +10,9 @@
 import Trace from '@/components/common/trace/Trace'
 export default {
   name: 'Index',
+  methods: {
+
+  },
   components: {
     Trace,
   }

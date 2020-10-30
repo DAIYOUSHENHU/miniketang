@@ -2,6 +2,36 @@
 <div>
   <el-container>
     <el-main>
+      <div class="newStu">
+        <el-button type="danger" @click="newdialogFormVisible = true">新增</el-button>
+        <el-dialog title="增加学生" :visible.sync="newdialogFormVisible" style="text-align: left">
+          <el-form>
+
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+              <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
+            </el-form-item>
+
+            <el-form-item label="性别" :label-width="formLabelWidth" style="text-align: left">
+              <el-select v-model="form.sex" placeholder="请选择性别">
+                <el-option label="男" value="1"></el-option>
+                <el-option label="女" value="0"></el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="电话" :label-width="formLabelWidth">
+              <el-input v-model="form.tel" autocomplete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item label="地址" :label-width="formLabelWidth">
+              <el-input v-model="form.addr" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="newdialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="newdialogFormVisible = false">确 定</el-button>
+          </div>
+        </el-dialog>
+      </div>
       <el-table id="tablestyle" style="width: 100%" height="600" highlight-current-row border fit show-header :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
         <el-table-column type="index" width="50">
         </el-table-column>
@@ -30,8 +60,8 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row);dialogFormVisible = true">编辑</el-button>
-            <el-dialog title="修改用户" :visible.sync="dialogFormVisible">
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row);editdialogFormVisible = true">编辑</el-button>
+            <el-dialog title="修改用户" :visible.sync="editdialogFormVisible">
               <el-form :model="scope.row">
                 <el-form-item label="姓名" :label-width="formLabelWidth">
                   <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -57,8 +87,8 @@
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button @click="editdialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="editdialogFormVisible = false">确 定</el-button>
               </div>
             </el-dialog>
             <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -86,7 +116,8 @@ export default {
       state: false,
       currentPage: 1,
       pagesize: 10,
-      dialogFormVisible: false,
+      newdialogFormVisible: false,
+      editdialogFormVisible: false,
       formLabelWidth: '120px',
       form: {
         name: '',
@@ -155,6 +186,16 @@ export default {
   background-color: #B3C0D1;
   color: #333;
   line-height: 60px;
+}
+
+.newStu {
+  text-align: right;
+  padding-right: 20px;
+}
+
+.newStuBtn {
+  text-align: right;
+  padding-right: 30px;
 }
 
 #tablestyle {
