@@ -17,12 +17,13 @@ export default {
 
 <style>
 .trace {
-  background-color: #555555;
+  background-color: white;
   text-align: center;
   font-size: 22px;
   height: 50px;
   width: 100%;
   margin-top: 0;
+  box-shadow: 0 1px 1px rgba(100, 100, 100, 0.3);
 }
 
 .trace p {
@@ -30,5 +31,6 @@ export default {
   margin-top: 10px;
   height: 50px;
   width: 100%;
+  padding-top: 10px;
 }
 </style>

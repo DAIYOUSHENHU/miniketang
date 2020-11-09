@@ -31,7 +31,7 @@
           <template slot="title"><i class="el-icon-menu"></i>课程管理</template>
           <el-menu-item-group>
             <el-menu-item index="3-1" @click="routertoCls">课程分类</el-menu-item>
-            <el-menu-item index="3-2">课程审核</el-menu-item>
+            <el-menu-item index="3-2" @click="routertoExa">课程审核</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
@@ -74,6 +74,9 @@ export default {
     },
     routertoOrd() {
       this.$router.push('/orders')
+    },
+    routertoExa() {
+      this.$router.push('/courses/examine')
     },
   },
 }

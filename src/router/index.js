@@ -7,6 +7,7 @@ const Lecturers = () => import('@/views/master/users/lecturers/Lecturers.vue')
 const Permission = () => import('@/views/master/permission/Permission')
 const Classify = () => import('@/views/master/courses/classify/Classify')
 const Orders = () => import('@/views/master/orders/Orders')
+const Examine = () => import('@/views/master/courses/examine/Examine')
 
 
 Vue.use(VueRouter)
@@ -53,6 +54,14 @@ const routes = [
     component: Classify,
     meta: {
       title: '课程分类'
+    }
+  },
+  {
+    path: '/courses/examine',
+    name: 'Examine',
+    component: Examine,
+    meta: {
+      title: '课程审核'
     }
   },
   {

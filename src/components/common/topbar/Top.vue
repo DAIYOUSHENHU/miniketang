@@ -20,9 +20,6 @@
 <script>
 import TopBar from './TopBar'
 
-import {
-  getMasterInfo
-} from '@/network/masterindex'
 export default {
   name: 'Topbar',
   data() {
@@ -33,12 +30,7 @@ export default {
   components: {
     TopBar,
   },
-  created() {
-    getMasterInfo().then(res => {
-      console.log(res);
-      this.MasterInfo = res
-    })
-  }
+
 }
 </script>
 
