@@ -6,12 +6,12 @@
         <el-table-column type="index" width="50">
         </el-table-column>
 
-        <el-table-column prop="classifyname" label="分类">
+        <el-table-column prop="name" label="分类">
         </el-table-column>
 
-        <el-table-column prop="tags" label="内容">
+        <el-table-column prop="children" label="内容">
           <template slot-scope="scope">
-            <el-tag v-for="tag in scope.row.tags" :key="tag.name" :type="tag.type">
+            <el-tag v-for="tag in scope.row.children" :key="tag.name" :type="tag.type">
               {{tag.name}}
             </el-tag>
           </template>
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import {getClaList} from '@/network/mascla'
+import bus from '@/components/eventBus/eventBus'
 export default {
   name: 'ListCla',
   data() {
@@ -51,56 +53,7 @@ export default {
       formLabelWidth: '120px',
       dialogVisible: false,
       deleteindex: Number,
-      tableData: [{
-          classifyname: '职业考证',
-          tags: [{
-              name: '公考求职',
-              type: 'info'
-            },
-            {
-              name: '法学院',
-              type: 'info'
-            },
-            {
-              name: '医疗卫生',
-              type: 'info'
-            }
-          ]
-        },
-        {
-          classifyname: 'IT-互联网',
-          tags: [{
-              name: '互联网产品',
-              type: 'info'
-            },
-            {
-              name: '编程语言',
-              type: 'info'
-            },
-            {
-              name: 'JAva开发',
-              type: 'info'
-            }
-          ]
-        },
-        {
-          classifyname: '兴趣-生活',
-          tags: [{
-              name: '吃',
-              type: 'info'
-            },
-            {
-              name: '喝',
-              type: 'info'
-            },
-            {
-              name: '玩',
-              type: 'info'
-            }
-          ]
-        }
-      ],
-
+      tableData: [],
     }
   },
   methods: {
@@ -112,24 +65,28 @@ export default {
       this.currentPage = val;
       console.log(`当前页: ${val}`);
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit(row) {
+      console.log(row);
     },
     handleDelete() {
-      console.log(this.deleteindex);
-      this.tableData.splice(this.deleteindex, 1)
+      
     },
     handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
+      
     },
-    deleteindexloc(index, row) {
-      this.deleteindex = index;
-    }
+    
   },
+  created() {
+    getClaList().then(res => {
+      console.log(res.data);
+      this.tableData = res.data
+    })
+  },
+  mounted() {
+    bus.$on("searchByName",words => {
+      console.log(words);
+    })
+  }
 }
 </script>
 

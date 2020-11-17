@@ -1,20 +1,20 @@
 <template>
 <div>
   <Trace>课程分类</Trace>
-  <AddCla></AddCla>
+  <seaCla></seaCla>
   <ListCla></ListCla>
 </div>
 </template>
 
 <script>
-import AddCla from './AddClassify'
+import seaCla from './SearchClassify'
 import ListCla from './ListClassify'
 import Trace from '@/components/common/trace/Trace'
 export default {
   name: 'Classify',
   components: {
     Trace,
-    AddCla,
+    seaCla,
     ListCla
   }
 }

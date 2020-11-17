@@ -3,11 +3,6 @@
   <Trace>首页</Trace>
 
   <p>我是首页</p>
-  <div>
-    <p v-for="item in data" :key="item.title">
-      {{item.title}}
-    </p>
-  </div>
 </div>
 </template>
 
@@ -15,7 +10,7 @@
 import Trace from '@/components/common/trace/Trace'
 import {
   getMasterInfo
-} from '@/network/masterindex'
+} from '@/network/masindex'
 export default {
   name: 'Index',
   data() {
@@ -32,7 +27,7 @@ export default {
 
   created() {
     getMasterInfo().then(res => {
-      this.data = res.data.banner.list;
+      this.data = res.data;
       console.log(this.data);
     })
   }

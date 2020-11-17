@@ -9,46 +9,54 @@
         <el-table-column prop="name" label="讲师姓名">
         </el-table-column>
 
-        <el-table-column prop="identifier" label="讲师编号">
+        <el-table-column prop="id" label="讲师编号">
         </el-table-column>
 
-        <el-table-column prop="phonenum" label="手机号">
+        <el-table-column prop="tel" label="手机号">
         </el-table-column>
 
-        <el-table-column prop="position" label="讲师介绍">
+        <el-table-column prop="level" label="讲师等级">
         </el-table-column>
 
-        <el-table-column prop="date" label="日期">
+        <el-table-column prop="intro" label="讲师介绍">
+        </el-table-column>
+
+        <el-table-column prop="career" label="讲师经历">
+        </el-table-column>
+
+        <el-table-column prop="gmtCreate" label="创建日期">
         </el-table-column>
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row);dialogFormVisible = true">编辑</el-button>
-            <el-dialog title="修改用户" :visible.sync="dialogFormVisible">
+            <el-button size="mini" @click="handleEdit(scope.row);editdialogFormVisible = true">编辑</el-button>
+            <el-dialog title="修改用户" :visible.sync="editdialogFormVisible">
               <el-form :model="scope.row">
                 <el-form-item label="姓名" :label-width="formLabelWidth">
                   <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="编号" :label-width="formLabelWidth">
-                  <el-input v-model="form.identifier" autocomplete="off"></el-input>
+                  <el-input v-model="form.id" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="手机号" :label-width="formLabelWidth">
-                  <el-input v-model="form.phonenum" autocomplete="off"></el-input>
+                  <el-input v-model="form.tel" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="讲师等级" :label-width="formLabelWidth">
+                  <el-input v-model="form.level" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="讲师介绍" :label-width="formLabelWidth">
-                  <el-input v-model="form.position" autocomplete="off"></el-input>
+                  <el-input v-model="form.intro" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="日期" :label-width="formLabelWidth">
-                  <el-input v-model="form.date" autocomplete="off"></el-input>
+                <el-form-item label="讲师经历" :label-width="formLabelWidth">
+                  <el-input v-model="form.career" autocomplete="off"></el-input>
                 </el-form-item>
-
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button @click="editcancel();editdialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="editconfirm();editdialogFormVisible = false">确 定</el-button>
               </div>
             </el-dialog>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -66,6 +74,8 @@
 </template>
 
 <script>
+import {getLecList,updatelec,deletelec,getLecListById} from '@/network/maslec'
+import bus from '@/components/eventBus/eventBus'
 export default {
   name: 'ListLec',
   data() {
@@ -73,39 +83,18 @@ export default {
       state: false,
       currentPage: 1,
       pagesize: 10,
-      dialogFormVisible: false,
+      adddialogFormVisible: false,
+      editdialogFormVisible: false,
       formLabelWidth: '120px',
       form: {
         name: '',
-        identifier: '',
-        phonenum: '',
-        totalpay: '',
-        date: '',
-        position: ''
+        id: '',
+        tel: '',
+        intro: '',
+        career: '',
+        level: '',
       },
-      tableData: [{
-          name: '小明',
-          identifier: '3345678',
-          phonenum: '18180186069',
-          date: '2016-05-02',
-          position: '特级讲师',
-        },
-        {
-          name: '小红',
-          identifier: '3345678',
-          phonenum: '18180186069',
-          date: '2016-05-02',
-          position: '初级讲师',
-        },
-        {
-          name: '小张',
-          identifier: '3345678',
-          phonenum: '18180186069',
-          date: '2016-05-02',
-          position: '资深讲师'
-        }
-      ],
-
+      tableData: [],
     }
   },
   methods: {
@@ -117,19 +106,46 @@ export default {
       this.currentPage = val;
       console.log(`当前页: ${val}`);
     },
-    handleEdit(index, row) {
-      console.log(index, row);
-      this.form.name = row.name
-      this.form.identifier = row.identifier
-      this.form.phonenum = row.phonenum
-      this.form.position = row.position
-      this.form.date = row.date
-
+    handleEdit(row) {
+      this.form = row
     },
-    handleDelete(index, row) {
-      console.log(index, row);
-      this.tableData.splice(index, 1)
+    handleDelete(row) {
+      deletelec(row.id).then(() => {
+        getLecList().then(res =>{
+        this.tableData = res.data;   
+    })
+      })
+    },
+    editcancel() {
+      this.form = ''
+    },
+    editconfirm() {
+      updatelec(this.form).then(() => {
+        getLecList().then(res =>{
+          this.tableData = res.data;   
+    })
+      })
     }
+  },
+
+  created() {
+    getLecList().then(res =>{
+      this.tableData = res.data;   
+    })
+  },
+
+  mounted() {
+    bus.$on("getlecid",id => {
+      getLecListById(id).then(res => {
+        if(res.data != null){
+          this.tableData = [];
+          this.tableData.push(res.data)
+        }else{
+          alert("查无此人！")
+        }
+        
+      })
+    })
   },
 }
 </script>
